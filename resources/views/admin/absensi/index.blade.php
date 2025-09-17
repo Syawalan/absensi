@@ -23,11 +23,6 @@
                 <label class="form-label">Nama Pegawai</label>
                 <input type="text" class="form-control" placeholder="Cari nama pegawai">
             </div>
-            <div class="col-md-3 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">
-                    <i class="bi bi-funnel"></i> Filter
-                </button>
-            </div>
         </form>
 
         <div class="table-responsive">
@@ -39,34 +34,30 @@
                         <th>Tanggal</th>
                         <th>Jam Masuk</th>
                         <th>Jam Pulang</th>
+                        <th>Status</th>
                         <th>Lokasi</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($absensi as $item)
                     <tr>
                         <td>
                             <img src="https://via.placeholder.com/60" class="rounded-circle" alt="foto">
                         </td>
-                        <td>Andi Pratama</td>
-                        <td>2025-09-15</td>
-                        <td>08:02</td>
-                        <td>17:05</td>
+                        <td>{{$item->$user->username}}</td>
+                        <td>{{$item->tanggal}}</td>
+                        <td>{{$item->jam_masuk ?? '-'}}</td>
+                        <td>{{$item->jam_pulang ?? '-'}}</td>
+                        <td>{{ucfirst($item->status)}}</td>
                         <td><a href="#" class="btn btn-sm btn-outline-info">
                                 <i class="bi bi-geo-alt"></i> Lihat
                             </a></td>
                     </tr>
+                    @empty
                     <tr>
-                        <td>
-                            <img src="https://via.placeholder.com/60" class="rounded-circle" alt="foto">
-                        </td>
-                        <td>Siti Rahma</td>
-                        <td>2025-09-15</td>
-                        <td>08:10</td>
-                        <td>17:15</td>
-                        <td><a href="#" class="btn btn-sm btn-outline-info">
-                                <i class="bi bi-geo-alt"></i> Lihat
-                            </a></td>
+                        <td colspan="8" class="text-center text-body-tertiary">Data ada data absensi</td>
                     </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

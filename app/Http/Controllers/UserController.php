@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('');
+        $users = User::where('id', '!=', 1)->get();
+        return view('admin.data_pegawai.index', compact('users'));
     }
 
     /**
@@ -22,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.data-pegawai.index');
+        return view('admin.data_pegawai.create');
     }
 
     /**
@@ -33,18 +34,29 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'tempat_lahir' => 'nullable|string|max:225',
+            'tgl_lahir' => 'nullable|date',
             'password' => 'required|min:8',
-            'jabatan' => 'required|string|max:25'
+            'bidang' => 'required|string|max:25'
         ]);
 
+        $path = null;
+
+        if($request->hasFile('foto')) {
+            $fotoPath = $request->file('foto')->store('foto', 'public');
+        }
         User::create([
-            'username' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
+            'foto' => $fotoPath,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
             'password' => Hash::make($request->password),
-            'jabatan' => $request->jabatan
+            'bidang' => $request->bidang
         ]);
 
-        return redirect()->route('admin.data-pegawai.index')->json('success', 'Data pegawai berhasil ditambahkan');
+        return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
     /**
@@ -52,7 +64,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -60,7 +72,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.data-pegawai.edit');
+        // $user = User::findOrFail($id);
+        return view('admin.data_pegawai.edit', compact('user'));
     }
 
     /**
@@ -70,19 +83,32 @@ class UserController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-            'jabatan' => 'required|string|max:25'
+            'email' => 'required|email|unique:users,email' . $user->id,
+            'foto' => 'nullable|images|mimes:jpg, jpeg, png|max:2048',
+            'tempat_lahir' => 'nullable|string|max:225',
+            'tgl_lahir' => 'nullable|date',
+            'password' => 'nullable|min:8',
+            'bidang' => 'required|string|max:25'
         ]);
+        
+        if ($request->hasFile('foto')) {
+            if($user->foto && Storage::exists($user->foto)){
+                Storage::delete($user->foto);
+            }
+
+            $fotoPath = $request->file('foto')->store('foto', 'public');
+            $user->foto = $fotoPath;
+        }
 
         $user->update([
             'username' => $request->name,
             'email' => $request->email,
+            'foto' => $request->foto,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'jabatan' => $request->jabatan
+            'bidang' => $request->bidang
         ]);
 
-        return redirect()->route('admin.data-pegawai.index');
+        return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
     }
 
     /**
@@ -91,6 +117,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.data-pegawai.index')->json('success', 'Data pegawai berhasil dihapus');
+        return redirect()->route('admin.data_pegawai.index')->json('success', 'Data pegawai berhasil dihapus');
     }
 }

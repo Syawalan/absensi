@@ -59,16 +59,26 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($rekap as $r)
+                            @php
+                                $totalAbsensi = $r->total_hadir + $r->total_izin + $r->total_sakit + $r->total_alpha;
+                                $persentase = $hariKerja > 0 ? round(($r->total_hadir / $hariKerja) * 100, 2) : 0;
+                            @endphp
                         <tr>
-                            <td>1</td>
-                            <td>Andi</td>
-                            <td>22</td>
-                            <td>20</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>0</td>
-                            <td><span class="badge bg-success">90,9%</span></td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $r->username }}</td>
+                            <td>{{$hariKerja}}</td>
+                            <td>{{$r->totalHadir}}</td>
+                            <td>{{ $r->totalIzin }}</td>
+                            <td>{{ $r->totalSakit }}</td>
+                            <td>{{ $r->totalAlpha }}</td>
+                            <td><span class="badge bg-success">{{ $persentase }}%</span></td>
                         </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="text-center text-body-tertiary">Data ada absensi</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('email')->unique();
+            $table->string('foto')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tgl_lahir')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'honorer'])->default('honorer');
-            $table->string('jabatan')->nullable();
+            $table->string('bidang')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

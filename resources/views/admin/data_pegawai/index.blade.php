@@ -25,7 +25,7 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
             <button class="btn btn-outline-secondary"><i class="bi bi-download"></i> Export</button>
-            <a class="btn btn-primary" href="{{ route('pegawai.create') }}"><i class="bi bi-plus-lg"></i> Tambah Data Pegawai</a>
+            <a class="btn btn-primary" href="{{ route('data-pegawai.create') }}"><i class="bi bi-plus-lg"></i> Tambah Data Pegawai</a>
         </div>
     </div>
 
@@ -41,36 +41,41 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
                             <th scope="col">TTL</th>
-                            <th scope="col">Jabatan</th>
+                            <th scope="col">Bidang</th>
                             <th scope="col">Alamat</th>
-                            <th scope="col">Tgl Data</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Contoh Data -->
+                        @forelse($users as $user)
                         <tr>
                             <td><input type="checkbox"></td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img style="width: 48px;" src="https://via.placeholder.com/48" class="rounded me-2" alt="Foto">
-                                    <span>John Doe</span>
+                                    <span>{{$user->username}}</span>
                                 </div>
                             </td>
-                            <td>johndoe@gmail.com</td>
-                            <td>01 Jan 1990</td>
-                            <td>Staff IT</td>
-                            <td>Pekanbaru</td>
-                            <td>15 Sep 2025</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->tempat_lahir}}, {{ \Carbon\Carbon::parse($user->tgl_lahir)->format('d M Y') }}</td>
+                            <td>{{$user->bidang}}</td>
+                            <td>{{ $user->alamat }}</td>
                             <td>
                                 <div class="d-flex flex-wrap gap-1">
-                                    <button class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></button>
-                                    <button class="btn btn-sm btn-warning"><i class="bi bi-eye"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-primary"><i class="bi bi-pencil"><a href="{{ route('data-pegawai.edit', $user->id) }} }}"></a></i></button>
+                                    <form action="{{ route('data-pegawai.destroy', $user->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
-                        <!-- End Contoh Data -->
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-body-tertiary">Data pegawai masih kosong</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

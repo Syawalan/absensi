@@ -143,12 +143,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('pegawai.index') }}">
+                            <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('data-pegawai.index') }}">
                                 <i class="bi bi-person"></i> Data Pegawai
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('absensi.*') ? 'active':'' }}" href="{{ route('absensi.index') }}">
+                            <a class="nav-link {{ request()->routeIs('absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
                                 <i class="bi bi-calendar-check"></i> Kelola Absensi
                             </a>
                         </li>
@@ -197,12 +197,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('pegawai.index') }}">
+                                <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('data-pegawai.index') }}">
                                     <i class="bi bi-person"></i> Data Pegawai
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('absensi.*') ? 'active':'' }}" href="{{ route('absensi.index') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
                                     <i class="bi bi-calendar-check"></i> Kelola Absensi
                                 </a>
                             </li>
