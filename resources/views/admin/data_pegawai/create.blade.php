@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Data Pegawai')
+
 @section('content')
 <div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -14,12 +16,21 @@
         </nav>
     </div>
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <!-- form -->
     <div class="card shadow-sm rounded-3">
         <div class="card-body">
             <h5 class="mb-3">Data Pegawai</h5>
 
-            <form action="{{ route('data-pegawai.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.data_pegawai.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -66,14 +77,37 @@
                                 <p class="mb-1"><strong>Klik untuk upload</strong></p>
                                 <small class="text-muted">JPG, PNG, JPEG</small>
                             </label>
-                            <input type="file" id="foto" class="d-none" accept="image/*">
+                            <input type="file" id="foto" name="foto" class="d-none" accept="image/*">
+
+                            <div class="mt-3">
+                                <img id="preview-foto" class="image-fluid rounded" src="#" alt="preview foto" style="max-width: 200px; display: none;">
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-
 </div>
+
+@push('script')
+<script>
+    document.getElementById('foto').addEventListener('change', function(event) {
+        const file = event.target.files[0]
+        const preview = document.getElementById('preview-foto')
+
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = function(e) {
+                preview.src = e.target.result()
+                preview.style.display = 'block'
+            }
+            reader.readAsDataURL(file)
+        } else {
+            preview.src = '#'
+            preview.style.display = 'none'
+        }
+    })
+</script>
+@endpush
 @endsection

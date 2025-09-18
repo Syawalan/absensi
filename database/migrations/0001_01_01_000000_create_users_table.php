@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tgl_lahir')->nullable();
+            $table->string('alamat');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'honorer'])->default('honorer');

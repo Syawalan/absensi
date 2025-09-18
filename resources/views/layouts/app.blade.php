@@ -143,7 +143,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('data-pegawai.index') }}">
+                            <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
                                 <i class="bi bi-person"></i> Data Pegawai
                             </a>
                         </li>
@@ -197,7 +197,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('data-pegawai.index') }}">
+                                <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
                                     <i class="bi bi-person"></i> Data Pegawai
                                 </a>
                             </li>
@@ -291,4 +291,5 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    @stack('script')
 </body>

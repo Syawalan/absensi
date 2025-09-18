@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', 1)->get();
+        $users = User::get();
+        // $users = User::where('id', '!=', 1)->get();
         return view('admin.data_pegawai.index', compact('users'));
     }
 
@@ -37,11 +38,12 @@ class UserController extends Controller
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'tempat_lahir' => 'nullable|string|max:225',
             'tgl_lahir' => 'nullable|date',
+            'alamat' => 'required|string|max:40',
             'password' => 'required|min:8',
-            'bidang' => 'required|string|max:25'
+            'bidang' => 'required|string|max:255'
         ]);
 
-        $path = null;
+        $fotoPath = null;
 
         if($request->hasFile('foto')) {
             $fotoPath = $request->file('foto')->store('foto', 'public');
@@ -52,6 +54,7 @@ class UserController extends Controller
             'foto' => $fotoPath,
             'tempat_lahir' => $request->tempat_lahir,
             'tgl_lahir' => $request->tgl_lahir,
+            'alamat' => $request->alamat,
             'password' => Hash::make($request->password),
             'bidang' => $request->bidang
         ]);
@@ -72,7 +75,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        // $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
         return view('admin.data_pegawai.edit', compact('user'));
     }
 
@@ -87,6 +90,7 @@ class UserController extends Controller
             'foto' => 'nullable|images|mimes:jpg, jpeg, png|max:2048',
             'tempat_lahir' => 'nullable|string|max:225',
             'tgl_lahir' => 'nullable|date',
+            'alamat' => 'required|string|max:40',
             'password' => 'nullable|min:8',
             'bidang' => 'required|string|max:25'
         ]);
@@ -101,9 +105,12 @@ class UserController extends Controller
         }
 
         $user->update([
-            'username' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
-            'foto' => $request->foto,
+            'foto' => $fotoPath,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
+            'alamat' => $request->alamat,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
             'bidang' => $request->bidang
         ]);
@@ -117,6 +124,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.data_pegawai.index')->json('success', 'Data pegawai berhasil dihapus');
+        return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil dihapus');
     }
 }

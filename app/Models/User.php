@@ -23,6 +23,7 @@ class User extends Authenticatable
         'foto',
         'tempat_lahir',
         'tgl_lahir',
+        'alamat',
         'password',
         'role',
         'bidang'

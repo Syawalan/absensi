@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Data Pegawai')
+
 @section('content')
 <div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -19,7 +21,7 @@
         <div class="card-body">
             <h5 class="mb-3">Data Pegawai</h5>
 
-            <form action="{{ route('data-pegawai.update', $user->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.data_pegawai.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
