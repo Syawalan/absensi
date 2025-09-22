@@ -15,7 +15,6 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-        // $users = User::where('id', '!=', 1)->get();
         return view('admin.data_pegawai.index', compact('users'));
     }
 

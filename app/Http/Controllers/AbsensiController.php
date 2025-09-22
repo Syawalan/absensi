@@ -25,11 +25,25 @@ class AbsensiController extends Controller
             return response()->json(['error'=>'Di luar radius kantor'], 403);
         }
 
+        $sudahAbsen = Absensi::where('user_id', $user->id)
+            ->where('tanggal', now()->toDateString())
+            ->exists();
+        
+        if($sudahAbsen) {
+            return response()->json(['error' => 'Anda sudah absen masuk hari ini', 400]);
+        }
+
+        $request->validate([
+            'foto_masuk' => 'required|image|max:2048'
+        ]);
+
+        $path = $request->file('foto_masuk')->store('absensi', 'public');
+
         Absensi::create([
             'user_id' => $user->id,
             'tanggal' => now()->toDateString(),
             'jam_masuk' => now()->toTimeString(),
-            'foto_masuk' => $request->foto_masuk,
+            'foto_masuk' => $path,
             'lat_masuk' => $request->lat,
             'lng_masuk' => $request->lng,
             'status' => 'hadir'
@@ -41,15 +55,27 @@ class AbsensiController extends Controller
     public function absenPulang(Request $request) {
         $user = Auth::user();
 
-        $absen = Absensi::where('user_id', $user->id)->where('tanggal', now()->toDateString())->first();
+        $absen = Absensi::where('user_id', $user->id)
+        ->where('tanggal', now()->toDateString())
+        ->first();
 
         if (!$absen) {
             return response()->json(['error' => 'Belum absen masuk'], 400);
         }
 
+        if ($absen->jam_pulang) {
+            return response()->json(['error' => 'Anda belum absen pulang'], 400);
+        }
+
+        $request->validate([
+            'foto_pulang' => 'required|image|max:2048'
+        ]);
+
+        $path = $request->file('foto_pulang')->store('absensi', 'public');
+
         $absen->update([
-            'jam_pulang' => now()->toDateString(),
-            'foto_pulang' => $request->foto_pulang,
+            'jam_pulang' => now()->toTimeString(),
+            'foto_pulang' => $path,
             'lat_pulang' => $request->lat,
             'lng_pulang' => $request->lng
         ]);
@@ -76,7 +102,7 @@ class AbsensiController extends Controller
 
         $a = sin($dLat / 2) * sin($dLat/2) +
              cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
-             sin($dLon / 2) * sin($dLat / 2);
+             sin($dLon / 2) * sin($dLon / 2);
         
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
         return $earthRadius * $c;

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('alamat');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'honorer'])->default('honorer');
             $table->string('bidang')->nullable();
             $table->rememberToken();
             $table->timestamps();

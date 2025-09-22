@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany(LogAktivitas::class);
     }
 
+    public function admin() {
+        return $this->belongsTo(Admin::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

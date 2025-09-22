@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('izin', function (Blueprint $table) {
+        Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->date('tanggal');
-            $table->enum('jenis', ['izin', 'sakit']);
-            $table->text('alasan');
-            $table->string('lampiran')->nullable();
+            $table->string('nama_admin');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('izin');
+        Schema::dropIfExists('admin');
     }
 };

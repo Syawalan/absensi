@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('foto_pulang');
             $table->decimal('lat_pulang', 10, 8);
             $table->decimal('lng_pulang', 11, 8);
-            $table->enum('status', ['hadir', 'izin', 'alpha', 'sakit'])->default('hadir');
+            $table->enum('status', ['hadir', 'izin', 'alpha', 'sakit'])->default('alpha');
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

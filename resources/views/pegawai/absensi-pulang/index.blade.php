@@ -6,7 +6,7 @@
 <div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
         <div>
-            <h3 class="fs-4 fw-bold">Absensi Masuk</h3>
+            <h3 class="fs-4 fw-bold">Absensi Pulang</h3>
         </div>
         <nav aria-label="breadrumb" class="mt-2 mt-md-0">
             <ol class="breadcrumb mb-0">
@@ -16,44 +16,7 @@
         </nav>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <p><strong>Tanggal:</strong></p>
-
-            @if (!$absensi)
-            <form action="{{ route('absenMasuk') }}" method="post" enctype="multipart/form-data"></form>
-            @csrf
-
-            <div class="mb-3">
-                <label for="" class="form-label">Upload Foto Masuk</label>
-                <input type="file" class="form-control" name="foto_masuk" required>
-            </div>
-            <input type="hidden" name="lat" id="lat">
-            <input type="hidden" name="lng" id="lng">
-            @elseif ($absensi && !$absensi->jam_pulang)
-            <form action="{{ route('absenPulang', $absensi->id) }}" method="post" enctype="multipart/form-data" required>
-                @csrf
-                @method('PUT')
-                <div class="mb-3">
-                    <label for="" class="form-label">Upload Foto Pulang</label>
-                    <input type="file" name="foto_pulang" class="form-control" required>
-                </div>
-                <input type="hidden" name="lat" id="lat">
-                <input type="hidden" name="lng" id="lng">
-            </form>
-            @else
-            <div class="alert alert-info">
-                Anda sudah melakukan absen masuk & pulang hari ini!
-            </div>
-            @endif
-        </div>
-    </div>
-
-
-
-
-
-    <!-- <form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -72,7 +35,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan Absensi</button>
-    </form> -->
+    </form>
 
 
 
@@ -99,7 +62,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        if (navigator.geolocation) {
+        if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 document.getElementById('latitdue').value = position.coords.latitude
                 document.getElementById('longitude').value = position.coords.longitude
