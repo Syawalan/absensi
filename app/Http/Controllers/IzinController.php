@@ -13,7 +13,8 @@ class IzinController extends Controller
         return view('pegawai.izin.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'tanggal' => 'required|date',
             'jenis' => 'required|in:izin,sakit',
@@ -27,7 +28,7 @@ class IzinController extends Controller
         }
 
         Izin::create([
-            'user_id' => Auth::id(),
+            'user_id' => session('user_id'),
             'tanggal' => $request->tanggal,
             'jenis' => $request->jenis,
             'alasan' => $request->alasan,
@@ -36,7 +37,9 @@ class IzinController extends Controller
 
         return redirect()->back()->with('success', 'Pengajuan izin/sakit berhasil!');
     }
-    public function updateStatus(Request $request, $id) {
+
+    public function updateStatus(Request $request, $id)
+    {
         $izin = Izin::findOrFail($id);
         $izin->update([
             'status' => $request->status,

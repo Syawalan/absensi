@@ -11,7 +11,7 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"></a>Dashboard</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"></a>Dashboard</li>
                 <li class="breadcrumb-item active">Edit Data</li>
             </ol>
         </nav>

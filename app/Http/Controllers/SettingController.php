@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\String_;
 
 class SettingController extends Controller
 {
-    public function index()
+    public function index() 
     {
         $setting = Setting::first();
-        return view('admin.setting', compact('setting'));
+        return view('admin.setting.index', compact('setting'));
     }
 
     public function create()
@@ -18,7 +19,7 @@ class SettingController extends Controller
         return view('admin.setting.create');
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $request->validate([
             'nama_kantor' => 'required|string|max:255',
@@ -37,8 +38,9 @@ class SettingController extends Controller
         return redirect()->route('setting.index')->with('success', 'Pengaturan berhasil disimpan');
     }
 
-    public function edit(Setting $setting)
+    public function edit(String $id)
     {
+        $setting = Setting::findOrFail($id);
         return view('admin.setting.edit', compact('setting'));
     }
 

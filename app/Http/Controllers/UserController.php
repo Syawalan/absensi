@@ -3,33 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $users = User::get();
+        $users = User::all();
         return view('admin.data_pegawai.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function dashboardPegawai()
+    {
+        $user_id = Session::get('user_id');
+        $user = User::findOrFail($user_id);
+
+        $totalHadir = $user->absensi()->where('status', 'hadir')->count();
+        $totalIzin = $user->absensi()->where('status', 'izin')->count();
+        $totalSakit = $user->absensi()->where('status', 'sakit')->count();
+        return view('pegawai.dashboard', compact('user', 'totalHadir', 'totalIzin', 'totalSakit'));
+    }
+
     public function create()
     {
         return view('admin.data_pegawai.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $request->validate([
             'username' => 'required|string|max:255',
@@ -47,6 +51,7 @@ class UserController extends Controller
         if($request->hasFile('foto')) {
             $fotoPath = $request->file('foto')->store('foto', 'public');
         }
+
         User::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -61,26 +66,12 @@ class UserController extends Controller
         return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
         return view('admin.data_pegawai.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -94,8 +85,8 @@ class UserController extends Controller
             'bidang' => 'required|string|max:25'
         ]);
         
-        if ($request->hasFile('foto')) {
-            if($user->foto && Storage::exists($user->foto)){
+        if ($request->hasFile('foto')){
+            if($user->foto && Storage::exists($user->foto)) {
                 Storage::delete($user->foto);
             }
 
@@ -117,10 +108,7 @@ class UserController extends Controller
         return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
+    public function destroy(User $user) 
     {
         $user->delete();
         return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil dihapus');

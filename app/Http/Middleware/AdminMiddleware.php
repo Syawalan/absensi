@@ -11,15 +11,22 @@ class AdminMiddleware
 {
     /**
      * Handle an incoming request.
-     *
+     * @param \Illuminate\Http\Request $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return mixed
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('admin')->check()) {
+        if(session('role') === 'admin') {
             return $next($request);
         }
-
         return redirect()->route('login.form')->with('error', 'Silahkan login sebagai admin');
+
+
+
+        // if (Auth::guard('admin')->check()) {
+        //     return $next($request);
+        // }
+        // return redirect()->route('login.form')->with('error', 'Silahkan login sebagai admin');
     }
 }

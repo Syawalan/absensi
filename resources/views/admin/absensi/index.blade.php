@@ -44,7 +44,7 @@
                         <td>
                             <img src="https://via.placeholder.com/60" class="rounded-circle" alt="foto">
                         </td>
-                        <td>{{$item->$user->username}}</td>
+                        <td>{{$item->user->username}}</td>
                         <td>{{$item->tanggal}}</td>
                         <td>{{$item->jam_masuk ?? '-'}}</td>
                         <td>{{$item->jam_pulang ?? '-'}}</td>

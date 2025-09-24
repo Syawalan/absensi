@@ -127,6 +127,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
+            @if (session('role') === 'admin')
             <!-- Sidebar (default tampil di desktop, offcanvas di mobile) -->
             <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
                 <div class="offcanvas-header">
@@ -138,27 +139,27 @@
                     <p class="text-muted small">MENU</p>
                     <ul class="nav flex-column gap-2">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active': '' }}" href="{{ route('dashboard') }}">
+                            <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active': '' }}" href="{{ route('admin.dashboard') }}">
                                 <i class="bi bi-grid"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
+                            <a class="nav-link {{ request()->routeIs('admin.pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
                                 <i class="bi bi-person"></i> Data Pegawai
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
+                            <a class="nav-link {{ request()->routeIs('admin.absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
                                 <i class="bi bi-calendar-check"></i> Kelola Absensi
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('rekapitulasi.*') ? 'active' : '' }}" href="{{ route('rekapitulasi.index') }}">
+                            <a class="nav-link {{ request()->routeIs('admin.rekapitulasi.*') ? 'active' : '' }}" href="{{ route('rekapitulasi.index') }}">
                                 <i class="bi bi-clipboard-data"></i> Rekapitulasi
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('setting.*') ? 'active':'' }}" href="{{ route('setting.index') }}">
+                            <a class="nav-link {{ request()->routeIs('admin.setting.*') ? 'active':'' }}" href="{{ route('setting.index') }}">
                                 <i class="bi bi-gear"></i> Settings
                             </a>
                         </li>
@@ -179,11 +180,6 @@
                 </div>
             </div>
 
-
-
-
-
-
             <div class="col-sm-2 d-none d-md-block container-fluid">
                 <div class="d-flex">
                     <!-- Sidebar -->
@@ -192,12 +188,12 @@
                         <p class="text-muted small">MENU</p>
                         <ul class="nav flex-column gap-2">
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active': '' }}" href="{{ route('dashboard') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active': '' }}" href="{{ route('admin.dashboard') }}">
                                     <i class="bi bi-grid"></i> Dashboard
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.pegawai.*') ? 'active':'' }}" href="{{ route('admin.data_pegawai.index') }}">
                                     <i class="bi bi-person"></i> Data Pegawai
                                 </a>
                             </li>
@@ -232,6 +228,115 @@
                     <!-- Content -->
                 </div>
             </div>
+            @endif
+
+            @if (session('role') === 'pegawai')
+            <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
+                <div class="offcanvas-header">
+                    <h5 class="fw-bold">ABSENSI</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- Isi sidebar (copy paste dari sidebar aslinya) -->
+                    <p class="text-muted small">MENU</p>
+                    <ul class="nav flex-column gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pegawai.dashboard') ? 'active': '' }}" href="{{ route('pegawai.dashboard') }}">
+                                <i class="bi bi-grid"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @php $routeName = 'pegawai.absensi.index' @endphp
+
+                            @if (Route::has($routeName))
+                            <a class="nav-link {{ request()->routeIs('pegawai.absensi.*') ? 'active':'' }}"
+                                href="{{ route('pegawai.absensi.index') }}">
+                                <i class="bi bi-person"></i> Absensi
+                            </a>
+                            @else
+                            <a class="nav-link" href="{{ url('/pegawai/absensi') }}"></a>
+                            @endif
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pegawai.izin.*') ? 'active':'' }}" href="{{ route('pegawai.izin.create') }}">
+                                <i class="bi bi-calendar-check"></i> Izin
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="text-muted small mt-4">SUPPORT</p>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
+                        </li>
+                        <li class="nav-item d-flex justify-content-between align-items-center">
+                            <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
+                            <span class="badge-new">NEW</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-2 d-none d-md-block container-fluid">
+                <div class="d-flex">
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <h5 class="mb-4 fw-bold">ABSENSI</h5>
+                        <p class="text-muted small">MENU</p>
+                        <ul class="nav flex-column gap-2">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('pegawai.dashboard') ? 'active': '' }}" href="{{ route('pegawai.dashboard') }}">
+                                    <i class="bi bi-grid"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                @php $routeName = 'pegawai.absensi.index' @endphp
+
+                                @if (Route::has($routeName))
+                                <a class="nav-link {{ request()->routeIs('pegawai.absensi.*') ? 'active':'' }}"
+                                    href="{{ route('pegawai.absensi.index') }}">
+                                    <i class="bi bi-person"></i> Absensi
+                                </a>
+                                @else
+                                <a class="nav-link" href="{{ url('/pegawai/absensi') }}"></a>
+                                @endif
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('pegawai.izin.*') ? 'active':'' }}" href="{{ route('pegawai.izin.create') }}">
+                                    <i class="bi bi-calendar-check"></i> Izin
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="text-muted small mt-4">SUPPORT</p>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
+                            </li>
+                            <li class="nav-item d-flex justify-content-between align-items-center">
+                                <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
+                                <span class="badge-new">NEW</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Content -->
+                </div>
+            </div>
+            @endif
+
+
+
+
+
+
+
+
+
+
 
 
             <!-- navbar -->
@@ -256,28 +361,27 @@
 
                         <!-- Right: Icons + Profile -->
                         <div class="d-flex align-items-center">
-                            <!-- Dark Mode -->
-                            <div class="icon-btn position-relative">
-                                <i class="bi bi-moon"></i>
-                            </div>
-                            <!-- Notification -->
-                            <div class="icon-btn position-relative">
-                                <i class="bi bi-bell"></i>
-                                <span class="notify"></span>
-                            </div>
                             <!-- Profile -->
                             <div class="dropdown ms-3">
                                 <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://i.pravatar.cc/100" alt="profile" class="profile-img me-2">
-                                    <span>Musharof</span>
+                                @if(session('role') === 'admin')    
+                                <span>{{ $admin->nama_admin }}</span>
+                                @endif
+                                @if(session('role') === 'pegawai')    
+                                <span>{{ $user->username }}</span>
+                                @endif
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="">Profile</a></li>
-                                    <li><a class="dropdown-item" href="">Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="">Logout</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

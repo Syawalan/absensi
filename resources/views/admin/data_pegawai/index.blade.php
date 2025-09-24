@@ -11,7 +11,7 @@
         </div>
         <nav aria-label="breadcrumb" class="mt-2 mt-md-0">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href={{ route('dashboard') }}>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href={{ route('admin.dashboard') }}>Dashboard</a></li>
                 <li class="breadcrumb-item active">Pegawai</li>
             </ol>
         </nav>

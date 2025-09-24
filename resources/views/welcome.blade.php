@@ -65,7 +65,8 @@
         <h3 class="mt-3">Selamat Datang</h3>
         <p class="text-muted">Di Sistem Absensi Dinas Perpustakaan & Kearsipan Kab. Kampar</p>
       </div>
-      <form action="">
+      <form action="{{ route('login') }}" method="post">
+        @csrf
         <div class="mb-3">
           <input type="text" name="email" class="form-control" placeholder="Email">
         </div>
@@ -78,10 +79,14 @@
     <div class="col-md-6 login-right"></div>
   </div>
   
-  @if ($errors->any()) {
-    <div class="alert alert-danger mt-3">{{ $errors->first() }}</div>
-  }
-  
+  @if ($errors->any())
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
   @endif
 
 

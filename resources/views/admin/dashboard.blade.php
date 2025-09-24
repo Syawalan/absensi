@@ -12,7 +12,7 @@
                     </div>
                     <div class="ms-3">
                         <p class="mb-0 text-muted">Pegawai Honorer</p>
-                        <div class="stat-value">3,782</div>
+                        <div class="stat-value">{{ $jumlahUser }}</div>
                     </div>
                 </div>
             </div>
@@ -27,43 +27,13 @@
                     </div>
                     <div class="ms-3">
                         <p class="mb-0 text-muted">Absen</p>
-                        <div class="stat-value">5,359</div>
+                        <div class="stat-value">{{ $jumlahAbsensi }}</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Monthly Target (Gauge) -->
-        <div class="col-md-4">
-            <div class="card shadow-sm p-3">
-                <h6 class="fw-bold">Monthly Target</h6>
-                <div class="gauge-container">
-                    <canvas id="gaugeChart"></canvas>
-                    <div class="gauge-center">
-                        <h3>75.55%</h3>
-                        <span class="badge bg-success">+10%</span>
-                    </div>
-                </div>
-                <p class="text-muted small">
-                    You earn $3287 today, it's higher than last month.<br>
-                    Keep up your good work!
-                </p>
-                <div class="d-flex justify-content-around border-top pt-2 mt-2">
-                    <div class="text-center">
-                        <p class="mb-0 text-muted small">Target</p>
-                        <strong>$20K</strong> <span class="trend-down"><i class="bi bi-arrow-down"></i></span>
-                    </div>
-                    <div class="text-center">
-                        <p class="mb-0 text-muted small">Revenue</p>
-                        <strong>$20K</strong> <span class="trend-up"><i class="bi bi-arrow-up"></i></span>
-                    </div>
-                    <div class="text-center">
-                        <p class="mb-0 text-muted small">Today</p>
-                        <strong>$20K</strong> <span class="trend-up"><i class="bi bi-arrow-up"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

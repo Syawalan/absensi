@@ -6,11 +6,28 @@
 <div class="container mt-4">
     <h4 class="mb-3">Pengajuan Izin</h4>
 
+    {{-- Alert success --}}
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
     @endif
 
-    <form action="{{ route('izin.store') }}" method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+    {{-- Alert error (validasi) --}}
+    @if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Gagal!</strong> Pengajuan izin tidak dapat dikirim karena ada kesalahan:
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
+    <form action="{{ route('pegawai.izin.store') }}" method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
         @csrf
 
         <div class="mb-3">
@@ -34,7 +51,7 @@
 
         <div class="mb-3">
             <label for="lampiran" class="form-label">Lampiran</label>
-            <input type="file" class="form-control" id="lampiran">
+            <input type="file" name="lampiran" class="form-control" id="lampiran">
             <small class="text-muted">Format: jpg, jpeg, png, pdf (max 2mb)</small>
         </div>
 

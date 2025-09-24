@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Authenticatable
+class Admin extends Model
 {
+    use HasFactory;
+
     protected $table = 'admin';
 
     protected $fillable = [
@@ -14,17 +16,17 @@ class Admin extends Authenticatable
         'email',
         'password'
     ];
-    
+
     protected $hidden = ['password'];
 
-    public function users() {
+    public function  users() {
         return $this->hasMany(User::class);
     }
 
     public function setting() {
         return $this->hasOne(Setting::class);
     }
-    
+
     public function absensi() {
         return $this->hasMany(Absensi::class);
     }

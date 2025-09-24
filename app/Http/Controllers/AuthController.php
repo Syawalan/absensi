@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLoginForm() 
+    public function showLoginform()
     {
         return view('welcome');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -22,7 +22,7 @@ class AuthController extends Controller
         ]);
 
         $admin = Admin::where('email', $request->email)->first();
-        if ($admin && Hash::check($request->password, $admin->password)) {
+        if ($admin && Hash::check($request->password, $admin->password)){
             session([
                 'role' => 'admin',
                 'admin_id' => $admin->id,
@@ -30,7 +30,7 @@ class AuthController extends Controller
             ]);
             return redirect()->route('admin.dashboard');
         }
-
+        
         $user = User::where('email', $request->email)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             session([
@@ -40,7 +40,6 @@ class AuthController extends Controller
             ]);
             return redirect()->route('pegawai.dashboard');
         }
-
         return back()->withErrors(['email' => 'Email atau password salah']);
     }
 

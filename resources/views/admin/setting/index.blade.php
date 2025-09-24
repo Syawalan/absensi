@@ -23,23 +23,22 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if ($setting)
                     <tr>
-                        <td>Kantor Pusat</td>
-                        <td>-6.200000</td>
-                        <td>106.816666</td>
-                        <td>100</td>
-                        <td>15 Sep 2025</td>
+                        <td>{{ $setting->nama_kantor }}</td>
+                        <td>{{ $setting->latitude }}</td>
+                        <td>{{ $setting->longitude }}</td>
+                        <td>{{ $setting->radius_meter }}</td>
+                        <td>{{ $setting->updated_at->diffForHumans() }}</td>
                         <td>
                             <div class="d-flex flex-column flex-md-row gap-2">
-                            <a href="#" class="btn btn-md btn-warning">
+                            <a href="{{ route('setting.edit',$setting->id) }}" class="btn btn-md btn-warning">
                                 <i class="bi bi-pencil"></i> Edit
-                            </a>
-                            <a href="#" class="btn btn-md btn-danger">
-                                <i class="bi bi-trash"></i> Hapus
                             </a>
                             </div>
                         </td>
                     </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

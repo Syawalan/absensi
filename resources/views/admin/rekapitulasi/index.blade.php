@@ -68,10 +68,10 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $r->username }}</td>
                             <td>{{$hariKerja}}</td>
-                            <td>{{$r->totalHadir}}</td>
-                            <td>{{ $r->totalIzin }}</td>
-                            <td>{{ $r->totalSakit }}</td>
-                            <td>{{ $r->totalAlpha }}</td>
+                            <td>{{$r->total_hadir}}</td>
+                            <td>{{ $r->total_izin }}</td>
+                            <td>{{ $r->total_sakit }}</td>
+                            <td>{{ $r->total_alpha }}</td>
                             <td><span class="badge bg-success">{{ $persentase }}%</span></td>
                         </tr>
                         @empty
