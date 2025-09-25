@@ -16,7 +16,9 @@ class AbsensiController extends Controller
         $user_id = Session::get('user_id');
         $user = User::find($user_id);
 
-        if (!$user) {
+        if ($user) {
+            Auth::login($user);
+        } else {
             return redirect()->route('login')->withErrors(['msg' => 'Silakan login dulu']);
         }
         
@@ -32,10 +34,10 @@ class AbsensiController extends Controller
         $setting = Setting::first();
 
         $distance = $this->hitungJarak(
-            $setting->latitude,
-            $setting->longitude,
-            $request->lat,
-            $request->lng
+           (float) $setting->latitude,
+           (float) $setting->longitude,
+           (float) $request->lat,
+           (float) $request->lng
         );
 
         if ($distance > $setting->radius_meter) {
@@ -63,10 +65,14 @@ class AbsensiController extends Controller
             'foto_masuk' => $path,
             'lat_masuk' => $request->lat,
             'lng_masuk' => $request->lng,
-            'status' => 'hadir'
+            'status' => 'hadir',
+            'jam_pulang' => null,
+            'foto_pulang' => null,
+            'lat_pulang' => null,
+            'lng_pulang' => null,
         ]);
 
-        return response()->json(['success' => 'Absensi masuk berhasil']);
+        return redirect()->route('pegawai.dashboard')->with('success', 'Absensi masuk berhasil');
     }
 
     public function absenPulang(Request $request)

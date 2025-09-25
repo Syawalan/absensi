@@ -363,13 +363,8 @@
                         <div class="d-flex align-items-center">
                             <!-- Profile -->
                             <div class="dropdown ms-3">
-                                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @if(session('role') === 'admin')    
-                                <span>{{ $admin->nama_admin }}</span>
-                                @endif
-                                @if(session('role') === 'pegawai')    
-                                <span>{{ $user->username }}</span>
-                                @endif
+                                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">    
+                                <span>{{ session('nama') }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
