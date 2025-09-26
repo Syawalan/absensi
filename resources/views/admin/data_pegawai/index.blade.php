@@ -52,7 +52,7 @@
                             <td><input type="checkbox"></td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img style="width: 48px;" src="{{ asset('storage/foto/'.$user->foto) }}" class="rounded me-2" alt="Foto">
+                                    <img style="width: 48px;" src="{{ asset('storage/'.$user->foto) }}" class="rounded me-2" alt="Foto">
                                     <span>{{$user->username}}</span>
                                 </div>
                             </td>

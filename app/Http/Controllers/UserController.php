@@ -110,6 +110,9 @@ class UserController extends Controller
 
     public function destroy(User $user) 
     {
+        if ($user->foto && Storage::disk('public')->exists($user->foto)) {
+            Storage::disk('public')->delete($user->foto);
+        }
         $user->delete();
         return redirect()->route('admin.data_pegawai.index')->with('success', 'Data pegawai berhasil dihapus');
     }

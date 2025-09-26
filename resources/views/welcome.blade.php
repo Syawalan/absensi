@@ -44,7 +44,7 @@
       color: #fff;
     }
     .login-right {
-      background: url("{{ asset('/storage/asset/asset.jpg') }}") no-repeat center center/cover;
+      background: url("{{ asset('/storage/asset/image.png') }}") no-repeat center center/cover;
       min-height: 400px;
     }
     .social-login img {

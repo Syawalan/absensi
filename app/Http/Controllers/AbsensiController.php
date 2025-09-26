@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
+use function PHPUnit\Framework\returnSelf;
+
 class AbsensiController extends Controller
 {
     public function index()
@@ -21,12 +23,28 @@ class AbsensiController extends Controller
         } else {
             return redirect()->route('login')->withErrors(['msg' => 'Silakan login dulu']);
         }
-        
+
         $absensi = Absensi::where('user_id', $user->id)
             ->where('tanggal', now()->toDateString())
             ->first();
         return view('pegawai.absensi.index', compact('absensi'));
     }
+
+    public function riwayat()
+    {
+        if (!session()->has('user_id')) {
+            return redirect()->route('login.form')->with('error', 'Silakan login terlebih dahulu');
+        }
+
+        $userId = session('user_id');
+
+        $riwayat = Absensi::where('user_id', $userId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
+        return view('pegawai.absensi.riwayat', compact('riwayat'));
+    }
+
 
     public function absenMasuk(Request $request)
     {
@@ -34,10 +52,10 @@ class AbsensiController extends Controller
         $setting = Setting::first();
 
         $distance = $this->hitungJarak(
-           (float) $setting->latitude,
-           (float) $setting->longitude,
-           (float) $request->lat,
-           (float) $request->lng
+            (float) $setting->latitude,
+            (float) $setting->longitude,
+            (float) $request->lat,
+            (float) $request->lng
         );
 
         if ($distance > $setting->radius_meter) {

@@ -66,6 +66,7 @@ Route::middleware(['pegawai'])->prefix('pegawai')->group(function () {
     });
 
     Route::get('/absensi', [AbsensiController::class, 'index'])->name('pegawai.absensi.index');
+    Route::get('/absensi/riwayat', [AbsensiController::class, 'riwayat'])->name('pegawai.absensi.riwayat');
 
     Route::post('/absensi', [AbsensiController::class, 'absenMasuk'])->name('absenMasuk');
     Route::put('/absensi/pulang', [AbsensiController::class, 'absenPulang'])->name('absenPulang');

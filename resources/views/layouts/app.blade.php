@@ -150,7 +150,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('admin.absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
-                                <i class="bi bi-calendar-check"></i> Kelola Absensi
+                                <i class="bi bi-calendar-check"></i> Kelola Presensi
                             </a>
                         </li>
                         <li class="nav-item">
@@ -168,10 +168,6 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
-                        </li>
-                        <li class="nav-item d-flex justify-content-between align-items-center">
-                            <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
-                            <span class="badge-new">NEW</span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
@@ -199,7 +195,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('admin.absensi.*') ? 'active':'' }}" href="{{ route('admin.absensi.index') }}">
-                                    <i class="bi bi-calendar-check"></i> Kelola Absensi
+                                    <i class="bi bi-calendar-check"></i> Kelola Presensi
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -216,10 +212,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
                             </li>
-                            <li class="nav-item d-flex justify-content-between align-items-center">
-                                <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
-                                <span class="badge-new">NEW</span>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
                             </li>
@@ -229,6 +221,12 @@
                 </div>
             </div>
             @endif
+
+
+
+
+
+
 
             @if (session('role') === 'pegawai')
             <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
@@ -251,11 +249,16 @@
                             @if (Route::has($routeName))
                             <a class="nav-link {{ request()->routeIs('pegawai.absensi.*') ? 'active':'' }}"
                                 href="{{ route('pegawai.absensi.index') }}">
-                                <i class="bi bi-person"></i> Absensi
+                                <i class="bi bi-person"></i> Presensi
                             </a>
                             @else
                             <a class="nav-link" href="{{ url('/pegawai/absensi') }}"></a>
                             @endif
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pegawai.absensi.riwayat') }}">
+                                <i class="bi bi-journal-check"></i> Riwayat Presensi
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('pegawai.izin.*') ? 'active':'' }}" href="{{ route('pegawai.izin.create') }}">
@@ -268,10 +271,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
                         </li>
-                        <li class="nav-item d-flex justify-content-between align-items-center">
-                            <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
-                            <span class="badge-new">NEW</span>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
                         </li>
@@ -283,7 +282,7 @@
                 <div class="d-flex">
                     <!-- Sidebar -->
                     <div class="sidebar">
-                        <h5 class="mb-4 fw-bold">ABSENSI</h5>
+                        <h5 class="mb-4 fw-bold">Presensi</h5>
                         <p class="text-muted small">MENU</p>
                         <ul class="nav flex-column gap-2">
                             <li class="nav-item">
@@ -297,11 +296,16 @@
                                 @if (Route::has($routeName))
                                 <a class="nav-link {{ request()->routeIs('pegawai.absensi.*') ? 'active':'' }}"
                                     href="{{ route('pegawai.absensi.index') }}">
-                                    <i class="bi bi-person"></i> Absensi
+                                    <i class="bi bi-person"></i> Presensi
                                 </a>
                                 @else
                                 <a class="nav-link" href="{{ url('/pegawai/absensi') }}"></a>
                                 @endif
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pegawai.absensi.riwayat') }}">
+                                    <i class="bi bi-journal-check"></i> Riwayat Presensi
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('pegawai.izin.*') ? 'active':'' }}" href="{{ route('pegawai.izin.create') }}">
@@ -313,10 +317,6 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-chat"></i> Chat</a>
-                            </li>
-                            <li class="nav-item d-flex justify-content-between align-items-center">
-                                <a class="nav-link" href="#"><i class="bi bi-headset"></i> Support Ticket</a>
-                                <span class="badge-new">NEW</span>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Email</a>
@@ -363,8 +363,8 @@
                         <div class="d-flex align-items-center">
                             <!-- Profile -->
                             <div class="dropdown ms-3">
-                                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">    
-                                <span>{{ session('nama') }}</span>
+                                <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>{{ session('nama') }}</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>

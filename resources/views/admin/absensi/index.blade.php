@@ -29,7 +29,8 @@
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Foto</th>
+                        <th>Foto Masuk</th>
+                        <th>Foto Pulang</th>
                         <th>Nama Pegawai</th>
                         <th>Tanggal</th>
                         <th>Jam Masuk</th>
@@ -42,7 +43,10 @@
                     @forelse($absensi as $item)
                     <tr>
                         <td>
-                            <img src="https://via.placeholder.com/60" class="rounded-circle" alt="foto">
+                            <img src="{{ asset('storage/' . $item->foto_masuk) }}" width="50" class="rounded-circle" alt="foto">
+                        </td>
+                        <td>
+                            <img src="{{ asset('storage/' . $item->foto_pulang) }}" width="50" class="rounded-circle" alt="foto">
                         </td>
                         <td>{{$item->user->username}}</td>
                         <td>{{$item->tanggal}}</td>

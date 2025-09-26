@@ -7,7 +7,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between mb-3">
             <h5 class="mb-3">Daftar Pengaturan Lokasi Kantor</h5>
-            <a class="btn btn-primary" href=""><i class="bi bi-plus-lg"></i>Tambah Data Setting</a>
+            <a class="btn btn-primary" href="{{ route('setting.create') }}"><i class="bi bi-plus-lg"></i>Tambah Data Setting</a>
         </div>
 
         <div class="table-responsive">
