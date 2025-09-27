@@ -131,7 +131,7 @@
             <!-- Sidebar (default tampil di desktop, offcanvas di mobile) -->
             <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
                 <div class="offcanvas-header">
-                    <h5 class="fw-bold">ABSENSI</h5>
+                    <h5 class="fw-bold">PRESENSI</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -180,7 +180,7 @@
                 <div class="d-flex">
                     <!-- Sidebar -->
                     <div class="sidebar">
-                        <h5 class="mb-4 fw-bold">ABSENSI</h5>
+                        <h5 class="mb-4 fw-bold">PRESENSI</h5>
                         <p class="text-muted small">MENU</p>
                         <ul class="nav flex-column gap-2">
                             <li class="nav-item">
@@ -231,7 +231,7 @@
             @if (session('role') === 'pegawai')
             <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
                 <div class="offcanvas-header">
-                    <h5 class="fw-bold">ABSENSI</h5>
+                    <h5 class="fw-bold">PRESENSI</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -327,15 +327,6 @@
                 </div>
             </div>
             @endif
-
-
-
-
-
-
-
-
-
 
 
 

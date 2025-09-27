@@ -49,21 +49,17 @@ Route::middleware(['admin'])->prefix('admin')->group(function (){
         Route::put('/{id}', [SettingController::class, 'update'])->name('setting.update');
     });
 
-    Route::prefix('profile')->group(function() {
-        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
-    });
 });
+
+Route::prefix('profile')->group(function() {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
+});
+
 
 Route::middleware(['pegawai'])->prefix('pegawai')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboardPegawai'])->name('pegawai.dashboard');
-
-    Route::prefix('profile')->group(function() {
-        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/', [ProfileController::class, 'update'])->name('profile.update');
-    });
 
     Route::get('/absensi', [AbsensiController::class, 'index'])->name('pegawai.absensi.index');
     Route::get('/absensi/riwayat', [AbsensiController::class, 'riwayat'])->name('pegawai.absensi.riwayat');

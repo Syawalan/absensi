@@ -13,8 +13,9 @@ class ProfileController extends Controller
     public function index()
     {
         if (session('role') === 'admin') {
-            $user = Admin::find(session('admin_id'));
-            return view('profile.index', compact('user'));
+            $admin = Admin::find(session('admin_id'));
+            
+            return view('profile.index', compact('admin'));
         } elseif( session('role') === 'pegawai') {
             $user = User::find(session('user_id'));
             return view('profile.index', compact('user'));
@@ -24,8 +25,8 @@ class ProfileController extends Controller
     public function edit()
     {
         if (session('role') === 'admin') {
-            $user = Admin::find(session('admin_id'));
-            return view('profile.edit', compact('user'));
+            $admin = Admin::find(session('admin_id'));
+            return view('profile.edit', compact('admin'));
         } elseif( session('role') === 'pegawai') {
             $user = User::find(session('user_id'));
             return view('profile.edit', compact('user'));
@@ -35,21 +36,21 @@ class ProfileController extends Controller
     public function update(Request $request, Admin $admin)
     {
         if (session('role') === 'admin') {
-            $user = Admin::find(session('admin_id'));
+            $admin = Admin::find(session('admin_id'));
 
             $request->validate([
                 'nama_admin' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $user->id,
+                'email' => 'required|email|unique:users,email,' . $admin->id,
                 'password' => 'nullable|min:8|confirmed'
             ]);
 
-            $user->update([
+            $admin->update([
                 'nama_admin' => $request->nama_admin,
                 'email' => $request->email,
-                'password' => $request->password ? Hash::make($request->password) : $user->password
+                'password' => $request->password ? Hash::make($request->password) : $admin->password
             ]);
 
-            session(['nama' => $user->nama_admin]);
+            session(['nama' => $admin->nama_admin]);
             return redirect()->route('profile.index');
         }
 
