@@ -55,6 +55,6 @@ class SettingController extends Controller
 
         $setting->update($request->all());
 
-        return redirect()->route('admin.setting.index')->with('success', 'Pengaturan berhasil di update');
+        return redirect()->route('setting.index')->with('success', 'Pengaturan berhasil di update');
     }
 }

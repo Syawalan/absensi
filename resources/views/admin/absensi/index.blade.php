@@ -7,21 +7,25 @@
     <div class="card-body">
         <div class="d-flex justify-content-between">
             <h5 class="mb-3">Absensi Harian</h5>
-            <button class="btn btn-outline-secondary me-2"><i class="bi bi-download"></i> Export</button>
         </div>
 
-        <form action="" class="row g-3 mb-4">
+        <form action="{{ route('admin.absensi.index') }}" method="get" class="row g-3 mb-4">
             <div class="col-md-3">
                 <label for="" class="form-label">Tanggal</label>
-                <input type="date" class="form-control">
+                <input type="date" name="tanggal" value="{{ request('tanggal') }}" class="form-control">
             </div>
             <div class="col-md-3">
                 <label class="form-label">Bulan</label>
-                <input type="month" class="form-control">
+                <input type="month" name="bulan" value="{{ request('bulan_filter') }}" class="form-control">
             </div>
             <div class="col-md-3">
                 <label class="form-label">Nama Pegawai</label>
-                <input type="text" class="form-control" placeholder="Cari nama pegawai">
+                <input type="text" name="nama" value="{{ request('nama') }}" class="form-control" placeholder="Cari nama pegawai">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> Cari
+                </button>
             </div>
         </form>
 
@@ -53,7 +57,7 @@
                         <td>{{$item->jam_masuk ?? '-'}}</td>
                         <td>{{$item->jam_pulang ?? '-'}}</td>
                         <td>{{ucfirst($item->status)}}</td>
-                        <td><a href="#" class="btn btn-sm btn-outline-info">
+                        <td><a href="https://www.google.com/maps?q={{ $item->lat_masuk }},{{ $item->lng_masuk }}" target="_blank" class="btn btn-sm btn-outline-info">
                                 <i class="bi bi-geo-alt"></i> Lihat
                             </a></td>
                     </tr>
@@ -65,6 +69,11 @@
                 </tbody>
             </table>
         </div>
+        @if ($absensi instanceof Illuminate\Pagination\LengthAwarePaginator)
+            <div class="p-3">
+                {{ $absensi->links() }}
+            </div>
+        @endif
     </div>
 </div>
 @endsection

@@ -7,6 +7,7 @@
 
         <form action="{{ route('setting.update', $setting->id) }}" method="post" class="row g-3">
             @csrf
+            @method('put')
             <div class="col-md-6">
                 <label class="form-label">Nama Kantor</label>
                 <input type="text" name="nama_kantor" value="{{ old('nama_kantor', $setting->nama_kantor) }}" class="form-control" placeholder="Masukkan nama kantor">

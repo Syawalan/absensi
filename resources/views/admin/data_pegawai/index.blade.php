@@ -19,12 +19,13 @@
 
     <!-- Actions -->
     <div class="d-flex justify-content-between mb-3 flex-wrap gap-2">
-        <div class="input-group" style="max-width: 300px;">
-            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-            <input type="text" class="form-control border-start-0" placeholder="Search...">
-        </div>
+        <form action="{{ route('admin.data_pegawai.index') }}" method="get" class="mb-3">
+            <div class="input-group" style="max-width: 300px;">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" name="search" value="{{ request('search') }}" class="form-control border-start-0" placeholder="Search...">
+            </div>
+        </form>
         <div class="d-flex flex-wrap gap-2">
-            <button class="btn btn-outline-secondary"><i class="bi bi-download"></i> Export</button>
             <a class="btn btn-primary" href="{{ route('admin.data_pegawai.create') }}"><i class="bi bi-plus-lg"></i> Tambah Data Pegawai</a>
         </div>
     </div>
@@ -79,6 +80,13 @@
                     </tbody>
                 </table>
             </div>
+
+            @if ($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            <div class="p-3">
+                {{ $users->links() }}
+            </div>
+            @endif
+
         </div>
     </div>
 </div>

@@ -45,8 +45,8 @@ Route::middleware(['admin'])->prefix('admin')->group(function (){
         Route::get('/', [SettingController::class, 'index'])->name('setting.index');
         Route::get('/tambah', [SettingController::class, 'create'])->name('setting.create');
         Route::post('/', [SettingController::class, 'store'])->name('setting.store');
-        Route::get('/edit/{id}', [SettingController::class, 'edit'])->name('setting.edit');
-        Route::put('/{id}', [SettingController::class, 'update'])->name('setting.update');
+        Route::get('/edit/{setting}', [SettingController::class, 'edit'])->name('setting.edit');
+        Route::put('/{setting}', [SettingController::class, 'update'])->name('setting.update');
     });
 
 });

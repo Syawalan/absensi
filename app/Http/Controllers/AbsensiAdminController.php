@@ -12,14 +12,23 @@ class AbsensiAdminController extends Controller
 {
     public function index(Request $request)
     {
-        $absensi = Absensi::with('user')->when($request->bulan, function($q) use ($request) {
-            $q->whereMonth('tanggal', $request->bulan);
-        })
-        ->when($request->tahun, function ($q) use ($request) {
-            $q->whereYear('tanggal', $request->tahun);
-        })
-        ->orderBy('tanggal', 'desc')
-        ->get();
+        $absensi = Absensi::with('user')
+                ->when($request->tanggal, function ($q) use ($request) {
+                    $q->whereDate('tanggal', $request->tanggal);
+                })
+                ->when($request->bulan, function ($q) use ($request) {
+                    [$tahun, $bulan] = explode('-', $request->bulan);
+                    $q->whereYear('tanggal', $tahun)
+                        ->whereMonth('tanggal', $bulan);
+                })
+                ->when($request->nama, function ($q) use ($request) {
+                    $q->whereHas('user', function ($q2) use ($request) {
+                        $q2->where('username', 'like', "%{$request->nama}%");
+                    });
+                })
+                ->orderBy('tanggal', 'desc')
+                ->paginate(10)
+                ->appends($request->all());
 
         return view ('admin.absensi.index', compact('absensi'));
     }

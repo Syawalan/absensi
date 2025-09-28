@@ -11,11 +11,25 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all();
-        return view('admin.data_pegawai.index', compact('users'));
+    public function index(Request $request)
+{
+    $query = User::query();
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function($q) use ($search) {
+            $q->where('username', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('bidang', 'like', "%{$search}%");
+        });
     }
+
+    $users = $query->paginate(10);
+
+    return view('admin.data_pegawai.index', ['users' => $users, 'search' => $request->search]);
+}
+
 
     public function dashboardPegawai()
     {
