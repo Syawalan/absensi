@@ -53,7 +53,7 @@ class User extends Authenticatable
     }
 
     public function izin() {
-        return $this->hasMany(Izin::class);
+        return $this->hasMany(Izin::class, 'user_id');
     }
 
     public function admin() {

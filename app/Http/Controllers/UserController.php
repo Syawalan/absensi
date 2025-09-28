@@ -37,8 +37,8 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
 
         $totalHadir = $user->absensi()->where('status', 'hadir')->count();
-        $totalIzin = $user->absensi()->where('status', 'izin')->count();
-        $totalSakit = $user->absensi()->where('status', 'sakit')->count();
+        $totalIzin = $user->izin()->where('jenis', 'izin')->count();
+        $totalSakit = $user->izin()->where('jenis', 'sakit')->count();
         return view('pegawai.dashboard', compact('user', 'totalHadir', 'totalIzin', 'totalSakit'));
     }
 
